@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/emicklei/renderbee"
 	"html/template"
-	"io"
 	"os"
 )
 
@@ -13,8 +13,8 @@ type GoogleAnalytics struct {
 // RenderOn writes the result of executing its template with the receiver as its data
 // implements renderbee.Renderable so it can be decorated
 //
-func (g GoogleAnalytics) RenderOn(w io.Writer) {
-	GoogleAnalytics_Template.Execute(w, g)
+func (g GoogleAnalytics) RenderOn(hc renderbee.HtmlCanvas) {
+	GoogleAnalytics_Template.Execute(hc, g)
 }
 
 var GoogleAnalytics_Template = template.Must(template.New("GoogleAnalytics").Parse(`
@@ -29,5 +29,6 @@ ga('send', 'pageview');
 `))
 
 func main() {
-	GoogleAnalytics{"UA999"}.RenderOn(os.Stdout)
+	canvas := renderbee.HtmlCanvas{os.Stdout}
+	GoogleAnalytics{"UA999"}.RenderOn(canvas)
 }

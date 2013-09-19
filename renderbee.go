@@ -2,27 +2,26 @@ package renderbee
 
 import (
 	"html/template"
-	"io"
 )
 
 type Renderable interface {
-	RenderOn(w io.Writer)
+	RenderOn(h HtmlCanvas)
 }
 
 type Decorate struct {
 	Component Renderable
 }
 
-func (d Decorate) Execute(t *template.Template, data interface{}, w io.Writer) {
-	t.Execute(w, ComponentRenderer{d.Component, w})
+func (d Decorate) Execute(t *template.Template, data interface{}, hc HtmlCanvas) {
+	t.Execute(hc, componentRenderer{d.Component, hc})
 }
 
-type ComponentRenderer struct {
-	Component Renderable
-	Writer    io.Writer
+type componentRenderer struct {
+	component Renderable
+	canvas    HtmlCanvas
 }
 
-func (c ComponentRenderer) Render() string {
-	c.Component.RenderOn(c.Writer)
+func (c componentRenderer) Render() string {
+	c.component.RenderOn(c.canvas)
 	return ""
 }

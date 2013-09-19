@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/emicklei/renderbee"
 	"html/template"
-	"io"
 	"os"
 )
 
@@ -11,8 +10,8 @@ type PageLayout struct {
 	renderbee.Decorate
 }
 
-func (p PageLayout) RenderOn(w io.Writer) {
-	p.Decorate.Execute(PageLayout_Template, p, w)
+func (p PageLayout) RenderOn(hc renderbee.HtmlCanvas) {
+	p.Decorate.Execute(PageLayout_Template, p, hc)
 }
 
 var PageLayout_Template = template.Must(template.New("PageLayout").Parse(`
@@ -27,8 +26,8 @@ type Header struct {
 	Title string
 }
 
-func (h Header) RenderOn(w io.Writer) {
-	Header_Template.Execute(w, h)
+func (h Header) RenderOn(hc renderbee.HtmlCanvas) {
+	Header_Template.Execute(hc, h)
 }
 
 var Header_Template = template.Must(template.New("Header").Parse(`
@@ -36,5 +35,7 @@ var Header_Template = template.Must(template.New("Header").Parse(`
 `))
 
 func main() {
-	PageLayout{renderbee.Decorate{Header{"renderBee"}}}.RenderOn(os.Stdout)
+	hc := renderbee.HtmlCanvas{os.Stdout}
+	layout := PageLayout{renderbee.Decorate{Header{"renderBee"}}}
+	hc.Render(layout)
 }
