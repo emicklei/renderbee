@@ -10,6 +10,7 @@ var PageLayout_Template = template.Must(template.New("PageLayout").Parse(`
 <html>
 <body>
 {{.Render "Header"}}
+{{.Render "Footer"}}
 </body>
 </html>
 `))
@@ -26,9 +27,22 @@ var Header_Template = template.Must(template.New("Header").Parse(`
 <h1>{{.Title}}</h1>
 `))
 
+type Footer struct {
+	Caption string
+}
+
+func (f Footer) RenderOn(hc *renderbee.HtmlCanvas) {
+	Footer_Template.Execute(hc, f)
+}
+
+var Footer_Template = template.Must(template.New("Footer").Parse(`
+<h4>&copy; 2013. All rights reserved. {{.Caption}}</h4>
+`))
+
 func main() {
 	hc := renderbee.HtmlCanvas{os.Stdout}
 	lay := renderbee.NewContainer(PageLayout_Template)
-	lay.Add("Header", &Header{"renderBee"})
+	lay.Add("Header", &Header{"Demo renderBee"})
+	lay.Add("Footer", &Footer{"powered by renderBee"})
 	hc.Render(lay)
 }
