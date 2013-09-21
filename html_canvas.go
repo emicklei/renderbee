@@ -14,3 +14,10 @@ func (hc *HtmlCanvas) Render(r Renderable) *HtmlCanvas {
 	r.RenderOn(hc)
 	return hc
 }
+
+// Return a new HtmlCanvas for writing Html on an io.Writer
+func NewHtmlCanvas(writer io.Writer) *HtmlCanvas {
+	hc := new(HtmlCanvas)
+	hc.Writer = writer
+	return hc
+}

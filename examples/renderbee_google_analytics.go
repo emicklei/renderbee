@@ -29,6 +29,6 @@ ga('send', 'pageview');
 `))
 
 func main() {
-	canvas := renderbee.HtmlCanvas{os.Stdout}
+	canvas := renderbee.NewHtmlCanvas(os.Stdout)
 	canvas.Render(GoogleAnalytics{"UA999"})
 }

@@ -12,15 +12,15 @@ type Renderable interface {
 // Container encapsulates a Template and a set of named Renderable components.
 // A Container can be rendered on a HtmlCanvas.
 type Container struct {
-	Components map[string]Renderable
-	Template   *template.Template
+	components map[string]Renderable
+	template   *template.Template
 }
 
 // NewContainer creates and returns a Renderable Container with a html Template
 func NewContainer(template *template.Template) *Container {
 	c := new(Container)
-	c.Components = map[string]Renderable{}
-	c.Template = template
+	c.components = map[string]Renderable{}
+	c.template = template
 	return c
 }
 
@@ -28,14 +28,14 @@ func NewContainer(template *template.Template) *Container {
 // of named Renderable components.
 // Required method from the Renderable interface.
 func (c Container) RenderOn(hc *HtmlCanvas) {
-	c.Template.Execute(hc, componentsRenderer{c.Components, hc})
+	c.template.Execute(hc, componentsRenderer{c.components, hc})
 }
 
 // Add a Renderable component with its associated name
 // Refer to this component in a template by writing:
 // {{.Render "<name>" }}
 func (c *Container) Add(name string, r Renderable) {
-	c.Components[name] = r
+	c.components[name] = r
 }
 
 // componentsRenderer is a helper class to render components when executing a Template.
