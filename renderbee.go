@@ -5,23 +5,35 @@ import (
 )
 
 type Renderable interface {
-	RenderOn(h HtmlCanvas)
+	RenderOn(hc *HtmlCanvas)
 }
 
-type Decorate struct {
-	Component Renderable
+type Container struct {
+	Components map[string]Renderable
+	Template   *template.Template
 }
 
-func (d Decorate) Execute(t *template.Template, data interface{}, hc HtmlCanvas) {
-	t.Execute(hc, componentRenderer{d.Component, hc})
+func NewContainer(template *template.Template) *Container {
+	c := new(Container)
+	c.Components = map[string]Renderable{}
+	c.Template = template
+	return c
 }
 
-type componentRenderer struct {
-	component Renderable
-	canvas    HtmlCanvas
+func (c Container) RenderOn(hc *HtmlCanvas) {
+	c.Template.Execute(hc, componentsRenderer{c.Components, hc})
 }
 
-func (c componentRenderer) Render() string {
-	c.component.RenderOn(c.canvas)
+func (c *Container) Add(name string, r Renderable) {
+	c.Components[name] = r
+}
+
+type componentsRenderer struct {
+	components map[string]Renderable
+	canvas     *HtmlCanvas
+}
+
+func (c componentsRenderer) Render(name string) string {
+	c.components[name].RenderOn(c.canvas)
 	return ""
 }

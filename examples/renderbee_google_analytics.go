@@ -11,9 +11,9 @@ type GoogleAnalytics struct {
 }
 
 // RenderOn writes the result of executing its template with the receiver as its data
-// implements renderbee.Renderable so it can be decorated
+// implements renderbee.Renderable so it can be used in a Container.
 //
-func (g GoogleAnalytics) RenderOn(hc renderbee.HtmlCanvas) {
+func (g GoogleAnalytics) RenderOn(hc *renderbee.HtmlCanvas) {
 	GoogleAnalytics_Template.Execute(hc, g)
 }
 
@@ -30,5 +30,5 @@ ga('send', 'pageview');
 
 func main() {
 	canvas := renderbee.HtmlCanvas{os.Stdout}
-	GoogleAnalytics{"UA999"}.RenderOn(canvas)
+	canvas.Render(GoogleAnalytics{"UA999"})
 }
