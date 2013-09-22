@@ -1,6 +1,8 @@
 package renderbee
 
 import (
+	"bytes"
+	"html/template"
 	"io"
 )
 
@@ -20,4 +22,12 @@ func NewHtmlCanvas(writer io.Writer) *HtmlCanvas {
 	hc := new(HtmlCanvas)
 	hc.Writer = writer
 	return hc
+}
+
+// HTML returns a template.HTML from rendering a component r.
+func HTML(r Renderable) template.HTML {
+	buffer := new(bytes.Buffer)
+	canvas := NewHtmlCanvas(buffer)
+	r.RenderOn(canvas)
+	return template.HTML(buffer.String())
 }
