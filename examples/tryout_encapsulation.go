@@ -6,20 +6,31 @@ import (
 	"os"
 )
 
-type Feed struct {
-	Items []FeedItem
+type Markup struct {
+	Data     interface{}
+	Template *template.Template
+	Canvas   *renderbee.HtmlCanvas
+	Name     string
+}
+
+func (c Markup) RenderOn(hc *renderbee.MarkupCanvas) {
+	c.Template.Execute(hc, c.Data)
+}
+
+func (c Markup) Render() template.HTML {
+	return renderbee.HTML(c)
+}
+
+type MarkupSequence struct {
+	Sequence []Markup
 }
 
 var Feed_Template = template.Must(template.New("Feed_Template").Parse(`
 <div class="items">
-	{{range .Items}}
-		{{.Render "FeedItem"}}
+	{{range .Sequence}}
+		{{.Render}}
 	{{end}}
 </div>`))
-
-func (f Feed) RenderOn(hc *renderbee.HtmlCanvas) {
-	Feed_Template.Execute(hc, f)
-}
 
 type FeedItem struct {
 	Title       string
@@ -36,19 +47,13 @@ var FeedItem_Template = template.Must(template.New("FeedItem_Template").Parse(`
 	</div>
 </div>`))
 
-func (f FeedItem) RenderOn(hc *renderbee.HtmlCanvas) {
-	FeedItem_Template.Execute(hc, f)
-}
-
-func (f FeedItem) Render() template.HTML {
-	return renderbee.HTML(f)
-}
-
 var Page_Template = template.Must(template.New("Page_Template").Parse(`
 <html>
 	<body>
 		<h1>Todays news</h1>
 		{{.Render "Feed"}}
+		<h2>Old news</h2>
+		{{.Render "Old"}}
 	</body>
 </html>
 `))
@@ -56,13 +61,19 @@ var Page_Template = template.Must(template.New("Page_Template").Parse(`
 func main() {
 	item1 := FeedItem{"Go takes over the world", "The inevitable happened as...."}
 	item2 := FeedItem{"Free water for everybody", "A new source of fresh water has been...."}
-	feed := Feed{[]FeedItem{item1, item2}}
 
-	feedContainer := renderbee.NewContainer(Feed_Template)
-	feedContainer.Add("FeedItem", feed)
+	c1 := Markup{item1, FeedItem_Template}
+	c2 := Markup{item2, FeedItem_Template}
 
+	// NewMarkupSequence
+	feed := MarkupSequence{[]Markup{c1, c2}}
+
+	c3 := Markup{feed, Feed_Template}
+
+	// NewMarkupMap
 	page := renderbee.NewContainer(Page_Template)
-	page.Add("Feed", feedContainer)
+	page.Add("Feed", c3)
+	page.Add("Old", c1)
 
 	canvas := renderbee.NewHtmlCanvas(os.Stdout)
 	canvas.Render(page)
