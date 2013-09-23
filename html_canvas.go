@@ -6,6 +6,11 @@ import (
 	"io"
 )
 
+// Renderables can render themselves on a HtmlCanvas.
+type Renderable interface {
+	RenderOn(hc *HtmlCanvas)
+}
+
 // HtmlCanvas is a io.Writer for writing Renderable components.
 type HtmlCanvas struct {
 	io.Writer

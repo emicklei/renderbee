@@ -6,6 +6,10 @@ import (
 	"os"
 )
 
+// GoogleAnalytics is a simple compent that encapsulates a HTML script node for
+// communicating with google-analytics.com.
+// It adds its own implementation of the Renderable interface such that it can be used
+// in
 type GoogleAnalytics struct {
 	Code string
 }

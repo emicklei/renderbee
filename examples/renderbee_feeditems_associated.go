@@ -52,7 +52,7 @@ func main() {
 	item2 := FeedItem{"Free water for everybody", "A new source of fresh water has been...."}
 	feed := Feed{[]FeedItem{item1, item2}}
 
-	page := renderbee.NewContainer(Page_Template)
+	page := renderbee.NewFragmentMap(Page_Template)
 	page.Add("Feed", feed)
 
 	canvas := renderbee.NewHtmlCanvas(os.Stdout)

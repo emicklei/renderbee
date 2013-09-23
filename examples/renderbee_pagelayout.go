@@ -41,8 +41,8 @@ var Footer_Template = template.Must(template.New("Footer").Parse(`
 
 func main() {
 	canvas := renderbee.NewHtmlCanvas(os.Stdout)
-	lay := renderbee.NewContainer(PageLayout_Template)
-	lay.Add("Header", &Header{"Demo renderBee"})
-	lay.Add("Footer", &Footer{"powered by renderBee"})
+	lay := renderbee.NewFragmentMap(PageLayout_Template)
+	lay.Add("Header", Header{"Demo renderBee"})
+	lay.Add("Footer", Footer{"powered by renderBee"})
 	canvas.Render(lay)
 }
