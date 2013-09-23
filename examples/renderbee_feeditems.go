@@ -46,7 +46,7 @@ func main() {
 	f1 := renderbee.NewFragment(item1, FeedItem_Template)
 	f2 := renderbee.NewFragment(item2, FeedItem_Template)
 
-	feed := renderbee.NewFragmentSequence(Feed_Template)
+	feed := renderbee.NewCompositeFragment(Feed_Template)
 	feed.Add(f1, f2)
 
 	page := renderbee.NewFragmentMap(Page_Template)
