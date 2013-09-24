@@ -25,10 +25,10 @@ func (c FragmentMap) RenderOn(hc *HtmlCanvas) {
 	c.template.Execute(hc, componentsRenderer{c.components, hc})
 }
 
-// Add a Renderable component with its associated name
+// Put adds a Renderable component with its associated name
 // Refer to this component in a template by writing:
 // {{.Render "<name>" }}
-func (c *FragmentMap) Add(name string, r Renderable) {
+func (c *FragmentMap) Put(name string, r Renderable) {
 	c.components[name] = r
 }
 

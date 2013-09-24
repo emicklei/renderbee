@@ -50,8 +50,8 @@ func main() {
 	feed.Add(f1, f2)
 
 	page := renderbee.NewFragmentMap(Page_Template)
-	page.Add("Feed", feed) // fragmentsequence
-	page.Add("Old", f1)    // fragment
+	page.Put("Feed", feed) // composite fragment
+	page.Put("Old", f1)    // fragment
 
 	canvas := renderbee.NewHtmlCanvas(os.Stdout)
 	canvas.Render(page)

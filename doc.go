@@ -1,12 +1,12 @@
 /*
 Package renderbee provides a micro-framework for creating HTML components based on the standard html/templates.
 
-Rationale
+Summary
 
 	Encapsulate a Go template and its data into a Fragment
- 	Use a FragmentMap or FragmentSequence to encapsulate a Go template and multiple components
- 	Render fragments on a HtmlCanvas (io.Writer) using templates
-	In addition to the standard template behavior, you can reference Fragments.
+ 	Use a FragmentMap or CompositeFragment to encapsulate a Go template and multiple components
+ 	Render fragments on a HtmlCanvas (io.Writer)
+	Template may refer to other Fragments.
 
 Example
 
@@ -23,7 +23,7 @@ Example
 	 </body>
 	</html>
 
-Use this template and fragment components to render a HTML page.
+Use this template with fragment components to render a HTML page.
 
 	page := renderBee.NewFragmentMap(Page_Template)
 	page.Add("Head", headFragment)

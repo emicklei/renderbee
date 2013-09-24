@@ -53,7 +53,7 @@ func main() {
 	feed := Feed{[]FeedItem{item1, item2}}
 
 	page := renderbee.NewFragmentMap(Page_Template)
-	page.Add("Feed", feed)
+	page.Put("Feed", feed)
 
 	canvas := renderbee.NewHtmlCanvas(os.Stdout)
 	canvas.Render(page)
