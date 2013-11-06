@@ -1,13 +1,12 @@
-renderBee
-=========
+![renderBee](bee.png)
 
 Package for creating HTML renderable components in Go.
 Inspired by [renderSnake](http://rendersnake.org) and [seaside](http://www.seaside.st/).
 
 ### Basics
-- Encapsulate a Go template and its data into a component
-- Use a Container to encapsulate a Go template and multiple components
-- Render components and containers on a HtmlCanvas (io.Writer)
+- Encapsulate a Go template and its data into a component, called a fragment
+- Use a Map or Composite to encapsulate a Go template and multiple fragments
+- Render fragments and containers on a HtmlCanvas (io.Writer)
 
 Read the [full documentation](http://godoc.org/github.com/emicklei/renderbee) and explore [the examples](https://github.com/emicklei/renderbee/tree/master/examples)
 

@@ -84,3 +84,38 @@ func ExampleFragmentMap() {
 	//</body>
 	//</html>
 }
+
+func ExampleNestedFragments() {
+	pageTemplate := template.Must(template.New("Page").Parse(`
+<html>
+<body>
+{{.Render "Body"}}
+</body>
+</html>`))
+
+	bodyTemplate := template.Must(template.New("Body").Parse(
+		`<h1>Table</h1>
+<table>{{.Render "Rows"}}</table>`))
+
+	rowsTemplate := template.Must(template.New("Rows").Parse(`
+{{range .}}<tr><td>{{.}}</td></tr>
+{{end}}`))
+
+	rows := NewFragment([]string{"render", "bee"}, rowsTemplate)
+	body := NewFragmentMap(bodyTemplate)
+	body.Put("Rows", rows)
+	page := NewFragmentMap(pageTemplate)
+	page.Put("Body", body)
+	canvas := NewHtmlCanvas(os.Stdout)
+	canvas.Render(page)
+	// Output:
+	//<html>
+	//<body>
+	//<h1>Table</h1>
+	//<table>
+	//<tr><td>render</td></tr>
+	//<tr><td>bee</td></tr>
+	//</table>
+	//</body>
+	//</html>
+}

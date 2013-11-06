@@ -19,17 +19,17 @@ func NewCompositeFragment(t *template.Template) *CompositeFragment {
 }
 
 // Add a Fragement to the slice of Fragments.
-func (f *CompositeFragment) Add(frags ...*Fragment) {
-	f.Fragments = append(f.Fragments, frags...)
+func (c *CompositeFragment) Add(frags ...*Fragment) {
+	c.Fragments = append(c.Fragments, frags...)
 }
 
 // RenderOn takes the template and collection of Fragments to render on a HtmlCanvas.
 // part of the Renderable interface
-func (f CompositeFragment) RenderOn(hc *HtmlCanvas) {
-	f.Template.Execute(hc, f.Fragments)
+func (c CompositeFragment) RenderOn(hc *HtmlCanvas) {
+	c.Template.Execute(hc, c.Fragments)
 }
 
 // Return some HTML(string) as a result of the rendering the receiver on a temporary HtmlCanvas.
-func (f CompositeFragment) Render() template.HTML {
-	return HTML(f)
+func (c CompositeFragment) Render() template.HTML {
+	return HTML(c)
 }

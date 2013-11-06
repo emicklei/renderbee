@@ -7,29 +7,29 @@ import (
 // FragmentMap encapsulates a Template and a set of named Renderable components.
 // A FragmentMap can be rendered on a HtmlCanvas.
 type FragmentMap struct {
-	components map[string]Renderable
-	template   *template.Template
+	Components map[string]Renderable
+	Template   *template.Template
 }
 
 // NewFragmentMap creates and returns a Renderable FragmentMap with a html Template.
 func NewFragmentMap(template *template.Template) *FragmentMap {
 	c := new(FragmentMap)
-	c.components = map[string]Renderable{}
-	c.template = template
+	c.Components = map[string]Renderable{}
+	c.Template = template
 	return c
 }
 
 // RenderOn executes the template of the FragmentMap using the collection of named Renderable components.
 // Required method from the Renderable interface.
 func (c FragmentMap) RenderOn(hc *HtmlCanvas) {
-	c.template.Execute(hc, componentsRenderer{c.components, hc})
+	c.Template.Execute(hc, componentsRenderer{c.Components, hc})
 }
 
 // Put adds a Renderable component with its associated name
 // Refer to this component in a template by writing:
 // {{.Render "<name>" }}
 func (c *FragmentMap) Put(name string, r Renderable) {
-	c.components[name] = r
+	c.Components[name] = r
 }
 
 // componentsRenderer is a helper class to render components when executing a Template.
