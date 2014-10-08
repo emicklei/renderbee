@@ -6,8 +6,7 @@ import (
 	"os"
 )
 
-var PageLayout_Template = template.Must(template.New("PageLayout").Parse(`
-<html>
+var PageLayout_Template = template.Must(template.New("PageLayout").Parse(`<html>
 <body>
 {{.Render "Header"}}
 {{.Render "Footer"}}
