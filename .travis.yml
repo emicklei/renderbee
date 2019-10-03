@@ -1,5 +1,4 @@
 language: go
 go: 
  - 1.x
-script:
- - go build
+script: go test -v
