@@ -11,6 +11,6 @@ Inspired by [renderSnake](http://rendersnake.org) and [seaside](http://www.seasi
 - Use a Map or Composite to encapsulate a Go template and multiple fragments
 - Render fragments and containers on a HtmlCanvas (io.Writer)
 
-Read the [full documentation](http://godoc.org/github.com/emicklei/renderbee) and try [the examples](https://github.com/emicklei/renderbee/tree/master/examples) or explore it on [sourcegraph] (https://sourcegraph.com/github.com/emicklei/renderbee).
+Read the [full documentation](http://godoc.org/github.com/emicklei/renderbee) and try [the examples](https://github.com/emicklei/renderbee/tree/master/examples) or explore it on [Sourcegraph](https://sourcegraph.com/github.com/emicklei/renderbee).
 
 (c) 2013, http://ernestmicklei.com. Apache v2 License
