@@ -1,9 +1,7 @@
-![renderBee](https://s3.amazonaws.com/public.philemonworks.com/renderbee/bee.png)
+![renderBee](./bee.png)
 
 Package for creating HTML renderable components in Go.
 Inspired by [renderSnake](http://rendersnake.org) and [seaside](http://www.seaside.st/).
-
-[![Build Status](https://travis-ci.org/emicklei/renderbee.png)](https://travis-ci.org/emicklei/renderbee)
 
 ## Basics
 
